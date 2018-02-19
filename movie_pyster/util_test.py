@@ -1,5 +1,5 @@
 import unittest
-from mock import MagicMock
+from unittest.mock import MagicMock
 
 from movie_pyster import is_movie, movie_files, is_extension, filename
 
@@ -19,11 +19,15 @@ class TestMain(unittest.TestCase):
         assert (not is_movie("a.txt"))
 
     def test_movie_files(self):
-        os.listdir = MagicMock(return_value=["a.txt", "b.mkv", "c.m4v", "d.urk"])
+        files = ["a.txt", "b.mkv", "c.m4v", "d.urk"]
+        os.listdir = MagicMock(return_value=files)
+        dir = "blah"
         self.assertEqual(movie_files(dir), ["b.mkv", "c.m4v"])
+        os.listdir.assert_called_with(dir)
 
     def test_filename(self):
         self.assertEqual("urk", filename("urk.bla"))
         self.assertEqual("nub", filename("/nub.flo"))
         self.assertEqual("eLS", filename("/SoME/thIng/eLS.es"))
+        self.assertEqual("blu", filename("blu"))
 
