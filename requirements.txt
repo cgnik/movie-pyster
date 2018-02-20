@@ -1,0 +1,3 @@
+tmdbsimple
+fuzzywuzzy
+python-Levenshtein

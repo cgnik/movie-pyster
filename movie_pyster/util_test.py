@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock
 
-from movie_pyster import is_movie, movie_files, is_extension, filename
+from movie_pyster import is_movie, movie_files, is_extension, filename, best_match
 
 import os
 
@@ -31,3 +31,10 @@ class TestMain(unittest.TestCase):
         self.assertEqual("eLS", filename("/SoME/thIng/eLS.es"))
         self.assertEqual("blu", filename("blu"))
 
+    def test_best_match(self):
+        self.assertEqual(0, best_match("urk", ["urk", "boo"]))
+        self.assertEqual(0, best_match("bork", ["burk", "boo"]))
+        self.assertEqual(1, best_match("blah", ["urk", "blah"]))
+        self.assertEqual(1, best_match("bro", ["urk", "boo", "stoo", "flah"]))
+        self.assertEqual(2, best_match("urk", ["derp", "dorp", "jurk", "boo"]))
+        self.assertEqual(3, best_match("Aliens", ["Aliens in the attic", "Alien Nation", "My Little Aliens", "Aliens", "Alien"]))
