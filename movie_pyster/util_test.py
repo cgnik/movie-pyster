@@ -37,4 +37,5 @@ class TestMain(unittest.TestCase):
         self.assertEqual(1, best_match("blah", ["urk", "blah"]))
         self.assertEqual(1, best_match("bro", ["urk", "boo", "stoo", "flah"]))
         self.assertEqual(2, best_match("urk", ["derp", "dorp", "jurk", "boo"]))
-        self.assertEqual(3, best_match("Aliens", ["Aliens in the attic", "Alien Nation", "My Little Aliens", "Aliens", "Alien"]))
+        self.assertEqual(3, best_match("Aliens",
+                                       ["Aliens in the attic", "Alien Nation", "My Little Aliens", "Aliens", "Alien"]))

@@ -20,8 +20,5 @@ def filename(filepath):
 
 
 def best_match(query, matches):
-    index = matches.index(query) if query in matches else -1
-    if index < 0:
-        scores = list(map(lambda s: fuzz.ratio(query, s), matches))
-        index = scores.index(max(scores))
-    return index
+    scores = list(map(lambda s: fuzz.ratio(query, s), matches))
+    return scores.index(max(scores))
