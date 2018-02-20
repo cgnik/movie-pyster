@@ -1,5 +1,5 @@
 import tmdbsimple
-import fuzzywuzzy
+from movie_pyster.util import best_dict_match
 
 with open('themoviedb-key.txt', 'rb')as keyfile:
     tmdbsimple.API_KEY = keyfile.read()

@@ -21,3 +21,5 @@ class TestMdb(TestCase):
         self.assertEquals(mdb.search("Aliens"), expected)
         s().movie.assert_called_with(query="Aliens")
 
+    def test_match_movie(self):
+        pass
