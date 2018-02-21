@@ -12,5 +12,8 @@ def base_url():
 def search(name):
     return tmdbsimple.Search().movie(query=name)['results']
 
-def best_movie_match(title, titles):
-    return 0
+
+def best_movie_match(title):
+    best = best_dict_match(title, 'title', search(title))
+    print(best)
+    return best
