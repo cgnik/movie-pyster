@@ -40,6 +40,7 @@ class TestUtil(unittest.TestCase):
         self.assertEqual(3, best_match("Aliens",
                                        ["Aliens in the attic", "Alien Nation", "My Little Aliens", "Aliens", "Alien"]))
         self.assertEqual(None, best_match("Duomo", "Nanites"))
+        self.assertEqual(None, best_match(None, None))
 
     def test_best_dict_match(self):
         test = [

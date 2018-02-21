@@ -1,12 +1,16 @@
 from sys import argv
+import tmdbsimple
+
+with open(argv[1], 'rb')as keyfile:
+    tmdbsimple.API_KEY = keyfile.read()
+
 from os import getcwd
 
 from movie_pyster.util import movie_files, filename
 from movie_pyster.mdb import best_movie_match
 
 if __name__ == '__main__':
-    keyfile = argv[2]
-    dirs = argv[:2] if len(argv) > 3 else [getcwd()]
+    dirs = argv[2:] if len(argv) > 2 else [getcwd()]
     for dir in dirs:
         moviefiles = movie_files(dir)
         for moviefile in moviefiles:

@@ -1,9 +1,6 @@
 import tmdbsimple
 from movie_pyster.util import best_dict_match
 
-with open('themoviedb-key.txt', 'rb')as keyfile:
-    tmdbsimple.API_KEY = keyfile.read()
-
 
 def base_url():
     return tmdbsimple.Configuration().base_url
@@ -14,6 +11,4 @@ def search(name):
 
 
 def best_movie_match(title):
-    best = best_dict_match(title, 'title', search(title))
-    print(best)
-    return best
+    return best_dict_match(title, 'title', search(title))

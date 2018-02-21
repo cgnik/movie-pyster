@@ -21,9 +21,10 @@ def filename(filepath):
 
 def best_match(query, matches):
     scores = process.extract(query, matches)
-    maxScore = max(scores, key=lambda x : x[1])
-    best = matches.index(maxScore[0]) if maxScore[1] > 65 else None
-    return best
+    if scores:
+        scoremax = max(scores, key=lambda x: x[1])
+        return matches.index(scoremax[0]) if scoremax[1] > 65 else None
+    return None
 
 
 def best_dict_match(query, propname, matches):
