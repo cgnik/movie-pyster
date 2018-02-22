@@ -1,5 +1,5 @@
 from unittest import TestCase
-from unittest.mock import patch, Mock, PropertyMock
+from unittest.mock import patch, Mock, MagicMock
 
 from movie_pyster import mdb
 
@@ -11,7 +11,7 @@ class TestMdb(TestCase):
     @patch('tmdbsimple.Configuration')
     def test_configuration(self, c):
         expected = "urk/nok"
-        type(c()).base_uri = PropertyMock(return_value=expected)
+        type(c()).info = MagicMock(return_value={'images': {'secure_base_url' : expected}})
         self.assertEqual(mdb.base_url(), expected)
 
     @patch('tmdbsimple.Search')
