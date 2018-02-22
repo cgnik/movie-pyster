@@ -13,13 +13,6 @@ class MockResponse:
 
 
 class TestUtil(unittest.TestCase):
-    @patch('requests.get')
-    def test_http_fetch(self, r):
-        expected = "derp"
-        r.return_value = expected
-        result = http_fetch('xyz')
-        self.assertEqual(expected, result)
-
     def test_is_extension(self):
         assert (is_extension("a.mkv", ['mkv']))
         assert (is_extension("a.m4v", ['m4v']))

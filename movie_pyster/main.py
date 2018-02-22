@@ -6,13 +6,18 @@ with open(argv[1], 'rb')as keyfile:
 
 from os import getcwd
 
-from movie_pyster.util import movie_files, filename
-from movie_pyster.mdb import best_movie_match
+from movie_pyster.util import movie_files, filename, http_fetch
+from movie_pyster.mdb import best_movie_match, base_url
 
+# base_url + w780 + poster_path
 if __name__ == '__main__':
     dirs = argv[2:] if len(argv) > 2 else [getcwd()]
+    base_url = base_url()
     for dir in dirs:
         moviefiles = movie_files(dir)
         for moviefile in moviefiles:
-            print("{} matched: {}".format(moviefile, best_movie_match(filename(moviefile))))
+            name = filename(moviefile)
+            best = best_movie_match(name)
+            url = "{}{}{}".format(base_url, 'w780', best.poster_path)
+            http_fetch(url, name)
     print("Done.")
