@@ -7,7 +7,7 @@ mimetypes.init()
 def http_fetch(url, name):
     r = requests.get(url, stream=True)
     if r.status_code == 200:
-        ext = mimetypes.guess_extension(r.headers.get('content-type').split(';')[0].strip())
+        ext = mimetypes.guess_all_extensions(r.headers.get('content-type').split(';')[0].strip())[-1]
         with open("{}{}".format(name, ext), 'wb') as f:
             for chunk in r:
                 f.write(chunk)
