@@ -18,6 +18,11 @@ if __name__ == '__main__':
         for moviefile in moviefiles:
             name = filename(moviefile)
             best = best_movie_match(name)
-            url = "{}{}{}".format(base_url, 'w780', best.poster_path)
-            http_fetch(url, name)
+            if best:
+                print(best)
+                url = "{}/{}{}".format(base_url, 'w780', best['poster_path'])
+                print(url)
+                http_fetch(url, name)
+            else:
+                print("No match for title '{}'".format(name))
     print("Done.")

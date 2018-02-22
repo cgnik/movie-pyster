@@ -3,7 +3,7 @@ from movie_pyster.util import best_dict_match
 
 
 def base_url():
-    return tmdbsimple.Configuration().base_url
+    return tmdbsimple.Configuration().info()['images']['secure_base_url']
 
 
 def search(name):

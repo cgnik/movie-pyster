@@ -1,12 +1,13 @@
 import os, re, requests
+import mimetypes
 from fuzzywuzzy import process
-from mimetypes import guess_extension
 
+mimetypes.init()
 
 def http_fetch(url, name):
     r = requests.get(url, stream=True)
     if r.status_code == 200:
-        ext = guess_extension(r.headers.get('content-type').split(';')[0].strip())
+        ext = mimetypes.guess_extension(r.headers.get('content-type').split(';')[0].strip())
         with open("{}{}".format(name, ext), 'wb') as f:
             for chunk in r:
                 f.write(chunk)

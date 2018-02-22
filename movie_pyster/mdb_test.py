@@ -11,7 +11,7 @@ class TestMdb(TestCase):
     @patch('tmdbsimple.Configuration')
     def test_configuration(self, c):
         expected = "urk/nok"
-        type(c()).base_url = PropertyMock(return_value=expected)
+        type(c()).base_uri = PropertyMock(return_value=expected)
         self.assertEqual(mdb.base_url(), expected)
 
     @patch('tmdbsimple.Search')
