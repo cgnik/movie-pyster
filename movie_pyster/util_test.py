@@ -1,12 +1,25 @@
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
-from movie_pyster import is_movie, movie_files, is_extension, filename, best_match, best_dict_match
+from movie_pyster import is_movie, movie_files, is_extension, filename, best_match, best_dict_match, http_fetch
 
 import os
 
 
+class MockResponse:
+    def __init__(self, json_data, status_code):
+        self.json_data = json_data
+        self.status_code = status_code
+
+
 class TestUtil(unittest.TestCase):
+    @patch('requests.get')
+    def test_http_fetch(self, r):
+        expected = "derp"
+        r.return_value = expected
+        result = http_fetch('xyz')
+        self.assertEqual(expected, result)
+
     def test_is_extension(self):
         assert (is_extension("a.mkv", ['mkv']))
         assert (is_extension("a.m4v", ['m4v']))
