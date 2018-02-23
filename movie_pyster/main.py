@@ -7,7 +7,7 @@ with open(argv[1], 'rb')as keyfile:
 
 from os import getcwd
 
-from movie_pyster.util import movie_files, filename, http_fetch
+from movie_pyster.util import movie_files, filename, http_fetch, find_image
 from movie_pyster.mdb import best_movie_match, base_url
 
 
@@ -29,7 +29,7 @@ class MoviePyster:
         for dir in dirs:
             for moviefile in movie_files(dir):
                 count = count + 1
-                self.update_movie(image_base_url, moviefile)
+                self.update_movie(dir, image_base_url, moviefile)
         self.log("\nDone processing {} movie files from {} directories".format(count, len(dirs)))
 
     def fetch_movie_image(self, image_base_url, name, poster_path):
@@ -37,14 +37,14 @@ class MoviePyster:
             http_fetch("{}/{}{}".format(image_base_url, 'w780', poster_path), name)
             self.log("Fetched image for {}".format(name))
 
-    def movie_image_exists(self, name):
-        return False
-
-    def update_movie(self, image_base_url, moviefile):
+    def update_movie(self, dir, image_base_url, moviefile):
         name = filename(moviefile)
         best = best_movie_match(name)
         if best:
-            self.fetch_movie_image(image_base_url, name, best['poster_path'])
+            if not find_image(dir, name):
+                self.fetch_movie_image(image_base_url, name, best['poster_path'])
+            else:
+                self.log("Skipping existing image for {}".format(name))
         else:
             self.log("No match for movie {}".format(moviefile))
 

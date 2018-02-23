@@ -29,8 +29,8 @@ def is_image(file):
     return is_extension(file, IMAGE_EXTENSIONS)
 
 
-def movie_files(dir):
-    return list(filter(lambda m: is_movie(m), os.listdir(dir)))
+def movie_files(filedir):
+    return list(filter(lambda m: is_movie(m), os.listdir(filedir)))
 
 
 def filename(filepath):
@@ -51,6 +51,6 @@ def best_dict_match(query, propname, matches):
     return matches[index] if index != None else None
 
 
-def find_image(dir, name):
-    names = list(filter(lambda c: c.startswith(name.lower()), [f.lower() for f in os.listdir(dir)]))
+def find_image(filedir, name):
+    names = list(filter(lambda c: c.startswith(name.lower() + '.'), [f.lower() for f in os.listdir(filedir)]))
     return any(map(lambda n: is_image(n), names))
