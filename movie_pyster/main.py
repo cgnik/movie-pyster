@@ -34,15 +34,14 @@ class MoviePyster:
 
     def fetch_movie_image(self, base_url, name, poster_path):
         if poster_path:
-            fetched = http_fetch("{}/{}{}".format(base_url, 'w780', poster_path), name)
+            http_fetch("{}/{}{}".format(base_url, 'w780', poster_path), name)
             self.log("Fetched image for {}".format(name))
-        return fetched
 
     def update_movie(self, image_base_url, moviefile):
         name = filename(moviefile)
         best = best_movie_match(name)
         if best:
-            fetched_image = self.fetch_movie_image(image_base_url, name, best['poster_path'])
+            self.fetch_movie_image(image_base_url, name, best['poster_path'])
         else:
             self.log("No match for movie {}".format(moviefile))
 
