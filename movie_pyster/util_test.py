@@ -1,7 +1,8 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
-from movie_pyster import is_movie, movie_files, is_extension, filename, best_match, best_dict_match, http_fetch
+from movie_pyster import is_movie, movie_files, is_extension, filename, best_match, best_dict_match, find_image, \
+    is_image
 
 import os
 
@@ -23,6 +24,13 @@ class TestUtil(unittest.TestCase):
         assert (is_movie("a.mkv"))
         assert (is_movie("a.m4v"))
         assert (not is_movie("a.txt"))
+
+    def test_is_image(self):
+        assert (is_image("a.jpg"))
+        assert (is_image("a.gif"))
+        assert (not is_image("a.txt"))
+        assert (not is_image("a.mkv"))
+        assert (not is_image("a.m4v"))
 
     def test_movie_files(self):
         files = ["a.txt", "b.mkv", "c.m4v", "d.urk"]
@@ -57,3 +65,14 @@ class TestUtil(unittest.TestCase):
         self.assertEqual(test[0], result)
         result = best_dict_match('baaa', 'title', test)
         self.assertEqual(None, result)
+
+    def test_find_images(self):
+        files = ["werp.jpg", "flerp.m4v", "slurp.gif", "hurp.jpeg", "jerp.txt"]
+        os.listdir = MagicMock(return_value=files)
+        self.assertTrue(find_image("werp", "werp"))
+        self.assertTrue(find_image("werp", "slurp"))
+        self.assertTrue(find_image("werp", "hurp"))
+        self.assertFalse(find_image("werp", "flerp"))
+        self.assertFalse(find_image("werp", "jerp"))
+        os.listdir.assert_called_with("werp")
+        self.assertEqual(os.listdir.call_count, 5)

@@ -2,7 +2,11 @@ import os, re, requests
 import mimetypes
 from fuzzywuzzy import process
 
+MOVIE_EXTENSIONS = ["mkv", "m4v"]
+IMAGE_EXTENSIONS = ["jpg", "jpeg", "gif", "png", "bmp"]
+
 mimetypes.init()
+
 
 def http_fetch(url, name):
     r = requests.get(url, stream=True)
@@ -14,11 +18,15 @@ def http_fetch(url, name):
 
 
 def is_extension(file, extensions):
-    return any(map(lambda e: file.endswith(e), extensions))
+    return any(map(lambda e: file.lower().endswith(e.lower()), extensions))
 
 
 def is_movie(file):
-    return is_extension(file, ["mkv", "m4v"])
+    return is_extension(file, MOVIE_EXTENSIONS)
+
+
+def is_image(file):
+    return is_extension(file, IMAGE_EXTENSIONS)
 
 
 def movie_files(dir):
@@ -41,3 +49,8 @@ def best_match(query, matches):
 def best_dict_match(query, propname, matches):
     index = best_match(query, list(map(lambda m: m[propname], matches)))
     return matches[index] if index != None else None
+
+
+def find_image(dir, name):
+    names = list(filter(lambda c: c.startswith(name.lower()), [f.lower() for f in os.listdir(dir)]))
+    return any(map(lambda n: is_image(n), names))

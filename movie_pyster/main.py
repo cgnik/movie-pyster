@@ -32,10 +32,13 @@ class MoviePyster:
                 self.update_movie(image_base_url, moviefile)
         self.log("\nDone processing {} movie files from {} directories".format(count, len(dirs)))
 
-    def fetch_movie_image(self, base_url, name, poster_path):
+    def fetch_movie_image(self, image_base_url, name, poster_path):
         if poster_path:
-            http_fetch("{}/{}{}".format(base_url, 'w780', poster_path), name)
+            http_fetch("{}/{}{}".format(image_base_url, 'w780', poster_path), name)
             self.log("Fetched image for {}".format(name))
+
+    def movie_image_exists(self, name):
+        return False
 
     def update_movie(self, image_base_url, moviefile):
         name = filename(moviefile)
