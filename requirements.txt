@@ -1,3 +1,4 @@
+requests
 tmdbsimple
 fuzzywuzzy
 python-Levenshtein

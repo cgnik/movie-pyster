@@ -2,17 +2,18 @@ import os, re, requests
 import mimetypes
 from fuzzywuzzy import process
 
-MOVIE_EXTENSIONS = ["mkv", "m4v"]
+MOVIE_EXTENSIONS = ["mkv", "m4v", "mp4"]
 IMAGE_EXTENSIONS = ["jpg", "jpeg", "gif", "png", "bmp"]
 
 mimetypes.init()
 
 
-def http_fetch(url, name):
+def http_fetch(url, name, target_dir):
+    target_dir = target_dir or '.'
     r = requests.get(url, stream=True)
     if r.status_code == 200:
         ext = mimetypes.guess_all_extensions(r.headers.get('content-type').split(';')[0].strip())[-1]
-        with open("{}{}".format(name, ext), 'wb') as f:
+        with open("{}/{}{}".format(target_dir, name, ext), 'wb') as f:
             for chunk in r:
                 f.write(chunk)
 

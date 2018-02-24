@@ -23,6 +23,7 @@ class TestUtil(unittest.TestCase):
     def test_is_movie(self):
         assert (is_movie("a.mkv"))
         assert (is_movie("a.m4v"))
+        assert (is_movie("a.mp4"))
         assert (not is_movie("a.txt"))
 
     def test_is_image(self):
