@@ -32,9 +32,9 @@ class MoviePyster:
                 self.update_movie(dir, image_base_url, moviefile)
         self.log("\nDone processing {} movie files from {} directories".format(count, len(dirs)))
 
-    def fetch_movie_image(self, image_base_url, name, poster_path):
+    def fetch_movie_image(self, dir, name, image_base_url, poster_path):
         if poster_path:
-            http_fetch("{}/{}{}".format(image_base_url, 'w780', poster_path), name)
+            http_fetch("{}/{}{}".format(image_base_url, 'w780', poster_path), name, dir)
             self.log("Fetched image for {}".format(name))
 
     def update_movie(self, dir, image_base_url, moviefile):
@@ -42,7 +42,7 @@ class MoviePyster:
         best = best_movie_match(name)
         if best:
             if not find_image(dir, name):
-                self.fetch_movie_image(image_base_url, name, best['poster_path'])
+                self.fetch_movie_image(dir, name, image_base_url, best['poster_path'])
             else:
                 self.log("Skipping existing image for {}".format(name))
         else:
